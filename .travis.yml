@@ -10,8 +10,13 @@ before_install:
 - npm install -g grunt
 - npm install -g bower
 install:
+- cd eps-shared-api
+- npm install
+- cd ..
+- cd eps-shared-web
 - npm install
 - bower install
+- cd ..
 script:
 - cd eps-shared-api
 - docker build -t krack/aps-shared-api:test .
