@@ -1,0 +1,30 @@
+version: '2'
+services:
+  #database : mongo db
+  mongo:
+    image: mongo:latest
+    volumes:
+      - "/opt/mongodb/db:/data/db"
+    restart: never
+  #rest api engie : node + code
+  api:
+    depends_on:
+      - mongo
+    image: node:latest
+    volumes:
+      - "./eps-shared-api/:/usr/src/app"
+    links:
+      - mongo
+    ports: 
+        - "8080:8080"
+    build: .
+    command: [node, /usr/src/app/index.js]
+    restart: never
+  #web site : static with apache
+  web:
+    image: httpd:2.4
+    volumes:
+      - "./eps-shared-web/app/:/usr/local/apache2/htdocs/"
+    ports: 
+        - "80:80"
+    restart: never
