@@ -1,0 +1,25 @@
+version: '2'
+services:
+  #database : mongo db
+  mongo:
+    image: mongo:latest
+    volumes:
+      - "/opt/mongodb/db:/data/db"
+    restart: always
+  #rest api engie : node + code
+  api:
+    depends_on:
+      - mongo
+    image: krack/aps-shared-api:${TAG}
+    links:
+      - mongo
+    ports: 
+        - "8080:8080"
+    restart: always
+  #web site : static with apache
+  web:
+    image: httpd:2.4
+    image: krack/aps-shared-web:${TAG}
+    ports: 
+        - "80:80"
+    restart: always

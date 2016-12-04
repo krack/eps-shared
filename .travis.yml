@@ -1,0 +1,30 @@
+sudo: required
+language: node_js
+services:
+- docker
+node_js:
+- node
+before_install:
+- curl -L http://releases.rancher.com/compose/v0.8.6/rancher-compose-linux-amd64-v0.8.6.tar.gz -o rancher-compose.tar.gz
+- tar -zxvf rancher-compose.tar.gz && mv ./rancher-compose-v0.8.6/rancher-compose ./rancher-compose && rm -fr ./rancher-compose-v0.8.6 && rm ./rancher-compose.tar.gz
+- npm install -g grunt
+- npm install -g bower
+install:
+- npm install
+- bower install
+script:
+- cd eps-shared-api
+- docker build -t krack/aps-shared-api:test .
+- cd ..
+- cd eps-shared-web
+- grunt build
+- cd ..
+after_success:
+- cd eps-shared-web
+- docker build -t krack/aps-shared-web:test .
+- cd ..
+- docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+- docker push krack/aps-shared-api:test
+- docker push krack/aps-shared-web:test
+- ./rancher-compose -p eps-shared-dev -f docker-compose.yml -r rancher-compose.yml rm -f
+- ./rancher-compose -p eps-shared-dev -f docker-compose.yml -r rancher-compose.yml -e dev.env up -d
