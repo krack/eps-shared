@@ -14,12 +14,12 @@ services:
     links:
       - mongo
     ports: 
-        - "8080:8080"
+        - "8086:8080"
     restart: always
   #web site : static with apache
   web:
     image: httpd:2.4
     image: krack/aps-shared-web:${TAG}
     ports: 
-        - "80:80"
+        - "8087:80"
     restart: always
