@@ -1,0 +1,6 @@
+mongo:
+  scale: 1
+api:
+  scale: 1
+web:
+  scale: 1
