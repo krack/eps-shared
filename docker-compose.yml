@@ -2,22 +2,22 @@
 mongo:
   image: mongo:latest
   volumes:
-    - /opt/mongodb/db:/data/db
+  - /opt/mongodb/db:/data/db
   restart: always
 #rest api engie : node + code
 api:
   depends_on:
-    - mongo
+  - mongo
   image: krack/aps-shared-api:${TAG}
   links:
-    - mongo
+  - mongo
   ports: 
-      - HOST_PORT_API:8080
+  - HOST_PORT_API:8080
   restart: always
 #web site : static with apache
 web:
   image: httpd:2.4
   image: krack/aps-shared-web:${TAG}
   ports: 
-      - HOST_PORT_WEB:80
+  - HOST_PORT_WEB:80
   restart: always
