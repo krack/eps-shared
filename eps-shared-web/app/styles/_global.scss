@@ -1,0 +1,162 @@
+$icon-font-path: '../fonts/';
+
+// bower:scss
+@import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+// endbower
+
+//
+
+body> h1, nav, nav ul, nav ul li{ 
+  display: inline-block;
+}
+body> h1{ 
+  height: 50px;
+  line-height: 50px;
+  margin-top: 0px;
+}
+ body> h1{
+  color: $color2;
+  font-family: cursive;
+}
+body> h1:before{
+  content: ' ';
+  height: 50px;
+  display: block;
+  position: absolute;
+  right: 0;
+  left: 0;
+  background-color: $color1;
+  z-index: -5;
+}
+nav {
+  margin-bottom: 15px;
+  vertical-align: bottom;
+  ul{
+    margin: 0px;
+    width: 100%;
+    li{
+      margin-right:10px;
+    }
+  }
+  a{
+    color: $color2;
+    &:hover, &:focus{
+      color: $color2;
+      text-decoration: none;
+    }
+    &.current{
+      color:$color3;
+    }
+  }
+}
+
+#content{
+  position: absolute;
+  right: 260px;
+  top: 50px;
+  left: 5px;
+  display: inline-block;
+  vertical-align: top;
+}
+.contact{
+  display: inline-block;
+  position: absolute;
+  right: 5px;
+  top: 60px;
+  min-width: 250px;
+  text-align: center;
+  border: solid $color1 1px;
+  border-radius: 10px;
+  h1{
+    color: $color1;
+    font-size: 1.5em;
+    font-family: cursive;
+  }
+  a{
+    color: $color1;
+    &:before{
+      margin-right: 3px; 
+    }
+  }
+  a{
+    @extend .glyphicon;
+    @extend .glyphicon-phone-alt;
+  }
+  a[href^="tel:06"]{
+    @extend .glyphicon;
+    @extend .glyphicon-phone;
+  }
+
+  a[href^="mailto:"]{
+    @extend .glyphicon;
+    @extend .glyphicon-envelope;
+  }
+
+  a[href^="http:"]{
+    @extend .glyphicon;
+    @extend .glyphicon-globe;
+  }
+}
+
+table{
+  width: 900px;
+  max-width: 100%;
+}
+
+table, td, th{
+  border: solid $color1 1px;
+  text-align: center;
+}
+th{
+  background-color: $color1;
+  color: $color2;
+}
+
+ul > li{
+  list-style: circle;
+}
+
+
+
+
+
+
+/* Responsive: Portrait tablets and up */
+@media screen and (max-width: 768px) {
+ 
+  .contact, #content,  nav, nav ul, nav ul li{
+    display: inherit;
+    position: inherit;
+  }
+  h1{
+    font-size: 2.2em;
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+  }
+
+  nav {
+    a{
+      color: $color1;
+      display: block;
+      text-align: center;
+      &:hover, &:focus{
+        color: $color1;
+        text-decoration: none;
+      }
+      &.current{
+        color: $color2;
+        background-color: $color3;
+      }
+    }
+
+    ul, li{
+      padding: 0;
+      width: 100%;
+    }
+  }
+  .contact{
+    margin: 25px;
+  }
+  
+}
