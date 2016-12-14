@@ -12,6 +12,9 @@ api:
   ports: 
   - ${HOST_PORT_API}:8080
   restart: always
+  labels:
+    io.rancher.container.pull_image: always
+    proxy_url: ${EXPOSE_API_URL}
 #web site : static with apache
 web:
   image: httpd:2.4
@@ -19,3 +22,6 @@ web:
   ports: 
   - ${HOST_PORT_WEB}:80
   restart: always
+  labels:
+    io.rancher.container.pull_image: always
+    proxy_url: ${EXPOSE_SITE_URL}

@@ -21,10 +21,10 @@ services:
     command: [node, /usr/src/app/index.js]
     restart: never
   #web site : static with apache
-  web:
-    image: httpd:2.4
-    volumes:
-      - "./eps-shared-web/app/:/usr/local/apache2/htdocs/"
-    ports: 
-        - "80:80"
-    restart: never
+  #web:
+   # image: httpd:2.4
+    #volumes:
+     # - "./eps-shared-web/app/:/usr/local/apache2/htdocs/"
+    #ports: 
+    #    - "80:80"
+    #restart: never
