@@ -1,27 +1,35 @@
-#database : mongo db
-mongo:
-  image: mongo:latest
-  volumes:
-  - /opt/mongodb/db:/data/db
-  restart: always
-#rest api engie : node + code
-api:
-  image: krack/aps-shared-api:${TAG}
-  links:
-  - mongo
-  ports: 
-  - ${HOST_PORT_API}:8080
-  restart: always
-  labels:
-    io.rancher.container.pull_image: always
-    proxy_url: ${EXPOSE_API_URL}
-#web site : static with apache
-web:
-  image: httpd:2.4
-  image: krack/aps-shared-web:${TAG}
-  ports: 
-  - ${HOST_PORT_WEB}:80
-  restart: always
-  labels:
-    io.rancher.container.pull_image: always
-    proxy_url: ${EXPOSE_SITE_URL}
+version: '2'
+services:
+  #database : mongo db
+  mongo:
+    image: mongo:latest
+    volumes:
+    - /opt/mongodb/db:/data/db
+    restart: always
+  #rest api engie : node + code
+  load-balancer-api:
+    ports:
+    - ${HOST_PORT_API}
+    image: rancher/lb-service-haproxy:v0.4.6
+    labels:
+      proxy_url: ${EXPOSE_API_URL}
+  api:
+    image: krack/aps-shared-api:${TAG}
+    links:
+    - mongo
+    restart: always
+    labels:
+      io.rancher.container.pull_image: always
+  #web site : static with apache
+  load-balancer-web:
+    ports:
+    - ${HOST_PORT_WEB}
+    image: rancher/lb-service-haproxy:v0.4.6
+    labels:
+      proxy_url: ${EXPOSE_SITE_URL}
+  web:
+    image: httpd:2.4
+    image: krack/aps-shared-web:${TAG}
+    restart: always
+    labels:
+      io.rancher.container.pull_image: always

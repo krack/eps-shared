@@ -5,8 +5,8 @@ services:
 node_js:
 - node
 before_install:
-- curl -L http://releases.rancher.com/compose/v0.8.6/rancher-compose-linux-amd64-v0.8.6.tar.gz -o rancher-compose.tar.gz
-- tar -zxvf rancher-compose.tar.gz && mv ./rancher-compose-v0.8.6/rancher-compose ./rancher-compose && rm -fr ./rancher-compose-v0.8.6 && rm ./rancher-compose.tar.gz
+- curl -L https://releases.rancher.com/compose/v0.12.1/rancher-compose-linux-amd64-v0.12.1.tar.gz -o rancher-compose.tar.gz
+- tar -zxvf rancher-compose.tar.gz && mv ./rancher-compose-v0.12.1/rancher-compose ./rancher-compose && rm -fr ./rancher-compose-v0.12.1 && rm ./rancher-compose.tar.gz
 - npm install -g gulp
 - npm install -g bower
 install:
@@ -31,5 +31,5 @@ after_success:
 - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 - docker push krack/aps-shared-api:test
 - docker push krack/aps-shared-web:test
-- ./rancher-compose -p eps-shared-dev -f docker-compose.yml -r rancher-compose.yml rm -f
+- ./rancher-compose -p eps-shared-dev -f docker-compose.yml -r rancher-compose.yml -e dev.env rm -f
 - ./rancher-compose -p eps-shared-dev -f docker-compose.yml -r rancher-compose.yml -e dev.env up -d
