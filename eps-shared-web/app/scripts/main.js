@@ -1,5 +1,5 @@
 //var apiUrl = "http://localhost:8080/";
-var apiUrl = "http://api.spiritofborepaire.fr:8090/";
+var apiUrl = "http://api.spiritofborepaire.fr/";
 
 function loadAds(){
   $("#content").text("loading...");

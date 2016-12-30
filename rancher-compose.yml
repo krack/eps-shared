@@ -9,12 +9,6 @@ services:
       - source_port: ${HOST_PORT_API}
         target_port: 8080
         service: api
-    health_check:
-      port: 42
-      interval: 2000
-      unhealthy_threshold: 3
-      healthy_threshold: 2
-      response_timeout: 2000
   api:
     scale: 1
   load-balancer-web:
@@ -24,11 +18,5 @@ services:
       - source_port: ${HOST_PORT_WEB}
         target_port: 80
         service: web
-    health_check:
-      port: 42
-      interval: 2000
-      unhealthy_threshold: 3
-      healthy_threshold: 2
-      response_timeout: 2000
   web:
     scale: 1
