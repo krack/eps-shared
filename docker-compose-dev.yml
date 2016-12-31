@@ -10,7 +10,7 @@ services:
   api:
     depends_on:
       - mongo
-    image: node:latest
+    image: node:alpine
     volumes:
       - "./eps-shared-api/:/usr/src/app"
     links:
