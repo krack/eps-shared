@@ -1,0 +1,19 @@
+<div class="container">
+	<h1>Ads Form</h1>
+	<form (ngSubmit)="createAd()">
+	{{diagnostic}}
+		<input type="text" class="form-control" [(ngModel)]="model._id" id="_id" name="_id">
+
+		<div class="form-group">
+			<label for="title">Title</label>
+			<input type="text" class="form-control" [(ngModel)]="model.title" id="title" name="title" required>
+		</div>
+
+		<div class="form-group">
+			<label for="describe">Describe</label>
+			<textarea type="text" class="form-control" [(ngModel)]="model.describe" id="describe" name="describe"></textarea>
+		</div>
+		<button type="submit" class="btn btn-success">Submit</button>
+	</form>
+	{{errorMessage}}
+</div>

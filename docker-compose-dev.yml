@@ -4,27 +4,28 @@ services:
   mongo:
     image: mongo:latest
     volumes:
-      - "/opt/mongodb/db:/data/db"
+    - /opt/mongodb/db:/data/db
     restart: never
   #rest api engie : node + code
   api:
     depends_on:
-      - mongo
+    - mongo
     image: node:alpine
     volumes:
-      - "./eps-shared-api/:/usr/src/app"
+    - ./eps-shared-api/:/usr/src/app
     links:
-      - mongo
+    - mongo
     ports: 
-        - "8080:8080"
-    build: .
-    command: [node, /usr/src/app/index.js]
+    - "8080:8080"
     restart: never
-  #web site : static with apache
-  #web:
-   # image: httpd:2.4
-    #volumes:
-     # - "./eps-shared-web/app/:/usr/local/apache2/htdocs/"
-    #ports: 
-    #    - "80:80"
-    #restart: never
+    working_dir: /usr/src/app
+    command: sh -c 'npm install; node index.js'
+  web:
+    image: node:alpine
+    ports:
+    - 4200:4200
+    restart: never
+    working_dir: /usr/src/app
+    volumes:
+    - "./eps-shared-web/:/usr/src/app"
+    command: sh -c 'npm install; npm start'
