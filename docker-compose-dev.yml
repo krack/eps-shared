@@ -19,7 +19,7 @@ services:
     - "8080:8080"
     restart: never
     working_dir: /usr/src/app
-    command: sh -c 'npm install; node index.js'
+    command: sh -c 'npm install; npm start'
   web:
     image: node:alpine
     ports:
