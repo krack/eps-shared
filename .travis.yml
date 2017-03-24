@@ -7,29 +7,26 @@ node_js:
 before_install:
 - curl -L https://releases.rancher.com/compose/v0.12.1/rancher-compose-linux-amd64-v0.12.1.tar.gz -o rancher-compose.tar.gz
 - tar -zxvf rancher-compose.tar.gz && mv ./rancher-compose-v0.12.1/rancher-compose ./rancher-compose && rm -fr ./rancher-compose-v0.12.1 && rm ./rancher-compose.tar.gz
-- npm install -g gulp
-- npm install -g bower
 install:
 - cd eps-shared-api
 - npm install
 - cd ..
 - cd eps-shared-web
-- npm install
-- bower install
+- npm install && npm run build
 - cd ..
+before_script:
+- envsubst < "dev.env" > "dev.env2" && mv dev.env2 dev.env
+- envsubst < "prod.env" > "prod.env2" && mv prod.env2 prod.env
 script:
 - cd eps-shared-api
 - docker build -t krack/aps-shared-api:test .
 - cd ..
 - cd eps-shared-web
-- gulp
-- cd ..
-after_success:
-- cd eps-shared-web
 - docker build -t krack/aps-shared-web:test .
 - cd ..
+after_success:
 - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 - docker push krack/aps-shared-api:test
 - docker push krack/aps-shared-web:test
-- ./rancher-compose -p eps-shared-dev -f docker-compose.yml -r rancher-compose.yml -e dev.env rm -f
+- ./rancher-compose -p eps-shared-dev -e dev.env rm -f
 - ./rancher-compose -p eps-shared-dev -f docker-compose.yml -r rancher-compose.yml -e dev.env up -d

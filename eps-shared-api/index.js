@@ -1,17 +1,60 @@
 var express  = require('express');
 var app = express();
 var mongoose = require('mongoose');
-var port = process.env.PORT || 8080;
+var Schema = mongoose.Schema;
 var http = require('http');
+var request = require('request');
 
-var database = {
-	url : 'mongodb://mongo:27017'
-}
 
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 
+var pkgcloud = require('pkgcloud');
+
+var configureAPI = require('./rest-api-database');
+
+
+
+
+/*************/
+//config
+//this serveur internet hostname
+var serverHost = process.env.SERVER_HOST || "http://localhost";
+//url to allow image + javascript (ihm) (TODO : autorize all url)
+var allowUrl = process.env.ALLOW_URL || 'http://localhost:4200';
+//serveur open port
+var port = process.env.SERVER_PORT || 8080;
+
+//storage configuration 
+//
+var storageContainer = process.env.STORAGE_CONTAINER || 'photos';
+//storage security
+//project id
+var storageTenantId = process.env.STORAGE_TENANT_ID;
+//username of storage
+var storageUsername = process.env.STORAGE_USERNAME;
+//password for username
+var storagePassword = process.env.STORAGE_PASSWORD;
+//authentification url
+var storageAutenticationUrl = process.env.STORAGE_AUTHENTICATION_URL;
+
+var storageRegion = process.env.STORAGE_REGION;
+//end config
+/***********/
+
+var storageClient = pkgcloud.storage.createClient({
+	provider: 'openstack', 
+    username: storageUsername, 
+    password: storagePassword, 
+    authUrl: storageAutenticationUrl, 
+    tenantId: storageTenantId,
+    version: "v2.0",
+    region: storageRegion
+});
+var database = {
+	url : 'mongodb://mongo:27017'
+}
 // To be redesigned with a loop and a break on total timeout or number of tries
 mongoose.connect(database.url, function(err) {
 	if(err) {
@@ -46,7 +89,7 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Origin', allowUrl);
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -62,60 +105,46 @@ app.use(function (req, res, next) {
     next();
 });
 
-var apiObject = {
-	title: {type: String},
-	describe: {type: String}
-};
 
-var baseApi = "/api/articles/"
+var config = {
+	"baseApi" : "/api/articles/",
+	"serverHost": serverHost,
+	"port": port,
+	"shema": 'articles'
 
-var mongoose = require('mongoose');
-var AdsModel = mongoose.model('Ad', apiObject);
+}
+var model = [
+	{
+		"name": "title",
+		"type": "String"
+	},
+	{
 
-function get(res){
-	AdsModel.find(function(err, ads) {
-		if (err)
-			res.send(err)
-		res.json(ads);
-	});
-};
+		"name": "describe",
+		"type": "String"
+	},
+	{
+		"name": "images",
+		"type" : "Files",
+		"container" : storageContainer
+	},
+	{
+		"name": "contact",
+		"type" : "Object",
+		"shema" : [
+			{
+				"name": "phone",
+				"type": "String"
+			}
+		]
+	},
+]
 
-function convert(object){
-	object.href = baseApi+"/"+object._id;
-	return object;
-};
 
-app.get(baseApi, function(req, res) {
-	get(res);
-});
 
-app.get(baseApi+':id', function(req, res) {
-	AdsModel.findById(req.params.id, function(err, ad) {
-		if (err)
-			res.send(err);
-		res.json(convert(ad));
-	});
-});
+configureAPI(config, model, app, storageClient);
 
-app.delete(baseApi+':id', function(req, res) {
-	AdsModel.findByIdAndRemove(req.params.id, function(err, ad) {
-		if (err)
-			res.send(err);
-		res.send();
-	});
-});
-app.post(baseApi, function(req, res) {
-	var keys = Object.keys(apiObject);
-	var data = {};
-	for(var i = 0; i < keys.length; i++){
-		data[keys[i]] = req.body[keys[i]];
-	}
-	AdsModel.create(data, function(err, ad) {
-		if (err)
-			res.send(err);
-		res.json(ad);
-	});
-});
+
 
 app.listen(port);
 console.log("App listening on port " + port);

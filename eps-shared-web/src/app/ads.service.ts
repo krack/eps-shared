@@ -2,13 +2,16 @@ import { Injectable }              from '@angular/core';
 import { Http, Response, Headers, RequestOptions }          from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
-import { Ad } from './ad';
+import {environment} from '../environments/environment';
+
+import { Ad } from './model/ad';
 
 @Injectable()
 export class AdsService {
 
-  private adsUrl = 'http://localhost:8080/api/articles/';  // URL to web API
+  private adsUrl = environment.apiUrl+'articles/';  // URL to web API
   constructor (private http: Http) {}
 
   getAds (): Observable<Ad[]> {
@@ -34,6 +37,12 @@ export class AdsService {
     return Observable.throw(errMsg);
   }
 
+  getAd (id: String): Observable<Ad> {
+    return this.http.get(this.adsUrl+id)
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
+
   addAd (ad: Ad): Observable<Ad> {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
@@ -43,4 +52,19 @@ export class AdsService {
                     .catch(this.handleError);
   }
 
+  updateAd (ad: Ad): Observable<Ad> {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    
+    return this.http.put(this.adsUrl+ad._id, ad, options)
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
+
+  deleteAd (id: String): Observable<any> {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http.delete(this.adsUrl+id, options);
+  }
 }

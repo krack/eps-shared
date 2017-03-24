@@ -18,6 +18,15 @@ services:
     links:
     - mongo
     restart: always
+    environment:
+    - ALLOW_URL=http://${EXPOSE_SITE_URL}
+    - SERVER_HOST=http://${EXPOSE_API_URL}
+    - SERVER_PORT=${HOST_PORT_API}
+    - STORAGE_USERNAME=aRhyvaAcSdDd
+    - STORAGE_PASSWORD=cfEADZUdc2NumRatjdTj89yxDf9JYhRd
+    - STORAGE_TENANT_ID=38edd2464f9e4bf7b3f7ee79e45b09a7
+    - STORAGE_AUTHENTICATION_URL=https://auth.cloud.ovh.net
+    - STORAGE_REGION=gra1
     labels:
       io.rancher.container.pull_image: always
   #web site : static with apache

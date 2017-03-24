@@ -1,0 +1,19 @@
+
+$fa-font-path: "//netdna.bootstrapcdn.com/font-awesome/4.7.0/fonts";
+@import '~font-awesome/scss/font-awesome.scss';
+
+
+
+
+
+h1{
+	display: inline-block;
+}
+nav{
+	display: inline-block;
+	.add{
+    	@extend .fa;
+    	@extend .fa-plus;
+		color: green;
+	}
+}

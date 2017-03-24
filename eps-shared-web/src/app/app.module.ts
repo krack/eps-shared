@@ -4,12 +4,16 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 
+
+//import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
+
 import { AppComponent } from './app.component';
 import { AdsListComponent } from './ads-list/ads-list.component';
 import { AdsFormComponentComponent } from './ads-form-component/ads-form-component.component';
 
 
 const appRoutes: Routes = [
+  { path: 'ad',      component: AdsFormComponentComponent },
   { path: 'ad/:id',      component: AdsFormComponentComponent },
   {
     path: 'ads',
@@ -26,7 +30,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     AdsListComponent,
-    AdsFormComponentComponent
+    AdsFormComponentComponent,
+  /*  FileSelectDirective*/
   ],
   imports: [
     BrowserModule,
