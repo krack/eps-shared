@@ -25,6 +25,8 @@ var serverHost = process.env.SERVER_HOST || "http://localhost";
 var allowUrl = process.env.ALLOW_URL || 'http://localhost:4200';
 //serveur open port
 var port = process.env.SERVER_PORT || 8080;
+var portPublic = process.env.SERVER_PUBLIC_PORT || 8080;
+
 
 //storage configuration 
 //
@@ -109,7 +111,7 @@ app.use(function (req, res, next) {
 var config = {
 	"baseApi" : "/api/articles/",
 	"serverHost": serverHost,
-	"port": port,
+	"port": portPublic,
 	"shema": 'articles'
 
 }
