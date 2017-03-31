@@ -1,0 +1,9 @@
+<button class="contact" (click)="show()">contact</button>
+<div class="block" [hidden]="!visible" (keyup)="hide()">
+	<div class="background" (click)="hide()"></div>
+	<div  class="info" *ngIf="contact">
+		<h1>contact</h1>
+	 	<a href="mailto:{{contact.email}}">{{contact.email}}</a>
+	 	<a href="tel:{{contact.phone}}">{{contact.phone}}</a>
+	</div>
+</div>

@@ -1,0 +1,51 @@
+
+$fa-font-path: "//netdna.bootstrapcdn.com/font-awesome/4.7.0/fonts";
+@import '~font-awesome/scss/font-awesome.scss';
+
+@import '../link-communication';
+button{
+	@extend .fa;
+    @extend .fa-phone;
+
+	display: block;
+	position: absolute;
+	bottom: 5px;
+	right: 12px;
+	&:before{
+		padding-right: 5px;
+	}
+}
+.info{
+	background-color: #33caff;
+	border-radius: 5px;
+	height: 300px;
+	max-height: 90%;
+	width: 400px;
+	max-width: 90%;  
+	margin: auto;
+
+	margin-top: 50vh; /* poussé de la moitié de hauteur de viewport */
+  	transform: translateY(-50%); /* tiré de la moitié de sa propre hauteur */
+  	text-align: center;
+	
+	a{
+		display: block;
+		text-decoration: none;
+	}
+}
+.background{
+	background-color: gray;
+	opacity: 0.5;
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;	
+}
+.block{
+	position: fixed;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+}

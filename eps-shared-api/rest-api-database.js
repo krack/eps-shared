@@ -60,7 +60,8 @@ module.exports = function init(config, modelStructure, app, storageClient) {
 	//PUT /:id
 	app.put(config.baseApi+':id', function(req, res) {
 		var keys = Object.keys(shemaConfiguration);
-		
+		console.log("entry : ");
+		console.log(req.body);
 		model.findById(req.params.id, function(err, object) {
 			
 			if (!object)

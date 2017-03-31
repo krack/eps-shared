@@ -137,6 +137,10 @@ var model = [
 			{
 				"name": "phone",
 				"type": "String"
+			},
+			{
+				"name": "email",
+				"type": "String"
 			}
 		]
 	},

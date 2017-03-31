@@ -5,11 +5,12 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 
 
-//import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
+import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
 
 import { AppComponent } from './app.component';
 import { AdsListComponent } from './ads-list/ads-list.component';
 import { AdsFormComponentComponent } from './ads-form-component/ads-form-component.component';
+import { ContactsComponent } from './contacts/contacts.component';
 
 
 const appRoutes: Routes = [
@@ -31,7 +32,8 @@ const appRoutes: Routes = [
     AppComponent,
     AdsListComponent,
     AdsFormComponentComponent,
-  /*  FileSelectDirective*/
+    FileSelectDirective,
+    ContactsComponent
   ],
   imports: [
     BrowserModule,

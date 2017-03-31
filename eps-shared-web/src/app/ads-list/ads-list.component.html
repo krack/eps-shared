@@ -1,9 +1,11 @@
 <section class="ads">
 	<div *ngFor="let ad of ads" class="ad">
 		<button class="delete" (click)="deleteAd($event, ad)" i18n="ad delete button">delete</button>
-		<a [routerLink]="['/ad/',ad._id]"  i18n="ad delete button">update</a>
+		<a class="update" [routerLink]="['/ad/',ad._id]"  i18n="ad delete button">update</a>
 	  	<h1>{{ad.title}}</h1>
-	  <span>{{ad.describe}}</span>
-	  <img *ngFor="let image of ad.images" [src]="photoURL(image.href)"/>
+
+		<img *ngFor="let image of ad.images" [src]="photoURL(image.href)"/>
+		<p>{{ad.describe}}</p>
+		<contacts [contact]="ad.contact">></contacts>
 	</div>
 </section>

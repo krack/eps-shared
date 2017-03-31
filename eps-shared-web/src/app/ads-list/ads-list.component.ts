@@ -7,7 +7,7 @@ import { AdsService } from '../ads.service';
 @Component({
   selector: 'ads-list',
   templateUrl: './ads-list.component.html',
-  //styleUrls: ['./ads-list.component.scss'],
+  styleUrls: ['./ads-list.component.scss'],
   providers:  [AdsService]
 })
 export class AdsListComponent  implements OnInit {

@@ -4,16 +4,33 @@ $fa-font-path: "//netdna.bootstrapcdn.com/font-awesome/4.7.0/fonts";
 
 
 
-
-
 h1{
 	display: inline-block;
 }
 nav{
 	display: inline-block;
+	 a{
+	 	text-decoration: none;
+	 }
 	.add{
     	@extend .fa;
     	@extend .fa-plus;
 		color: green;
+		font-size: 0px;
+		&:before{
+			font-size: 30px;
+		}
+	}
+	.list{
+    	@extend .fa;
+    	@extend .fa-list;
+		font-size: 0px;
+		color: #cccccc;
+		&:before{
+			font-size: 30px;
+		}
+		&.active{
+			color: #777777;
+		}
 	}
 }

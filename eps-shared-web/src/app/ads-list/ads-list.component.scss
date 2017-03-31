@@ -1,7 +1,43 @@
 
 $fa-font-path: "//netdna.bootstrapcdn.com/font-awesome/4.7.0/fonts";
 @import '~font-awesome/scss/font-awesome.scss';
-.delete{
-	@extend .fa;
-    @extend .fa-trash;
+.ad{ 
+	background-color: #33caff;
+	padding: 10px;
+	margin: 10px;
+	position: relative;
+	border-radius: 5px;
+	.delete, .update{
+		display: block;
+		position: absolute;
+		top: 2px;
+	    font-size: 0px;
+	    border: none;
+	    background: none;
+	    width: 15px;
+	    &:before{
+	    	font-size: 20px;
+	    }
+	}
+	.delete{
+		@extend .fa;
+	    @extend .fa-trash;
+		right: 12px;
+	    
+	}
+	.update{
+		@extend .fa;
+	    @extend .fa-pencil;
+		right: 32px;
+	}
+	img{
+		width: 20%;
+		max-height: 400px;
+		display: inline-block;
+	}
+	p{
+		width: 75%;
+		display: inline-block;
+		vertical-align: top;
+	}
 }

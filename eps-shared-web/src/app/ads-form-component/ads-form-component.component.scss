@@ -1,0 +1,35 @@
+.body{
+	border-spacing: 5px;
+	display: table;
+	width: 100%;
+	form{
+
+		background-color: #33caff;
+		display: table-cell;
+		vertical-align: top;
+		width: 48%;
+		padding: 10px;
+		.form-group{
+			
+			label{
+				vertical-align: top;
+
+			}
+			input, textarea{
+				width: 100%;
+				box-sizing:	border-box;
+			}
+			textarea{
+			}
+
+		}
+
+		#describe{
+			height: 120px;
+			resize: none;
+		}
+		img{
+			height: 100px;
+		}
+	}
+}

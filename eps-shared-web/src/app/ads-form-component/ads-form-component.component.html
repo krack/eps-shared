@@ -1,28 +1,42 @@
 <div class="container">
 	<h1>Ads Form</h1>
-	<form (ngSubmit)="createAd()">
-		<input type="text" class="form-control" [(ngModel)]="model._id" id="_id" name="_id">
+	<div class="body">
+		<form (ngSubmit)="createAd()">
+			<input type="hidden" class="form-control" [(ngModel)]="model._id" id="_id" name="_id">
 
-		<div class="form-group">
-			<label for="title">Title</label>
-			<input type="text" class="form-control" [(ngModel)]="model.title" id="title" name="title" required>
-		</div>
+			<div class="form-group">
+				<label for="title">Title</label>
+				<input type="text" class="form-control" [(ngModel)]="model.title" id="title" name="title" required />
+			</div>
 
-		<div class="form-group">
-			<label for="describe">Describe</label>
-			<textarea type="text" class="form-control" [(ngModel)]="model.describe" id="describe" name="describe"></textarea>
-		</div>
+			<div class="form-group">
+				<label for="describe">Describe</label>
+				<textarea type="text" class="form-control" [(ngModel)]="model.describe" id="describe" name="describe"></textarea>
+			</div>
 
-		<div class="form-group">
-			<label for="phone">Tel</label>
-			<textarea type="text" class="form-control" [(ngModel)]="model.contact.phone" id="phone" name="phone"></textarea>
-		</div>
-		<button type="submit" class="btn btn-success">Submit</button>
-	</form>
-	<!--<input type="file" class="form-control" name="single" ng2FileSelect [uploader]="uploader" /> 
-	<button type="button" class="btn btn-success btn-s"
-   (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-    <span class="glyphicon glyphicon-upload"></span> Upload all
-</button><br />-->
+			 <fieldset>
+   				<legend>Contact:</legend>
+				<div class="form-group">
+					<label for="phone">Tel</label>
+					<input type="text" class="form-control" [(ngModel)]="model.contact.phone" id="phone" name="phone" />
+				</div>
+				<div class="form-group">
+					<label for="email">Email</label>
+					<input type="email" class="form-control" [(ngModel)]="model.contact.email" id="email" name="email" />
+				</div>
+			</fieldset>
+			<button type="submit" class="btn btn-success">Submit</button>
+		</form>
+
+		<form>
+			<div>
+				<img *ngFor="let image of model.images" [src]="photoURL(image.href)"/>
+			</div>
+			<input type="file" class="form-control" name="single" ng2FileSelect [uploader]="uploader" /> 
+			<button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+		   		<span class="glyphicon glyphicon-upload"></span> Upload all
+			</button>
+		</form>
+	</div>
 	{{errorMessage}}
 </div>
